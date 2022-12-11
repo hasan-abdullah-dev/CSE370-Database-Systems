@@ -1,0 +1,17 @@
+drop table employees;
+create table employees ( employee_id char(10), first_name varchar(20), last_name varchar(20), email varchar(60), phone_number char(14), hire_date date, job_id int, salary int, commission_pct decimal(5,3), manager_id char(10),
+department_id int );
+
+1.select first_name, email, phone_number, hire_date, department_id from employees where hire_date in (select max(hire_date) from employees);
+
+2.select first_name, last_name, employee_id, phone_number, salary, department_id from employees where salary in (select min(salary) from employees group by department_id);
+
+3.select first_name, last_name, employee_id, commission_pct, department_id from employees where commission_pct < (select min(commission_pct) from employees where department_id = 5) and department_id = 7;
+
+4.select count(employee_id),department_id,salary from employees group by department_id having salary > 30000;
+
+***5.select department_id, job_id, commission_pct from employees where (job_id, commission_pct) in (select job_id, min(commission_pct) from employees group by department_id);
+
+6.select manager_id from employees where employee_id in (select employee_id from employees where salary >3500);
+
+7.select first_name, last_name, employee_id, email, salary, department_id, commission_pct from employees where commission_pct in (select min(commission_pct) from employees group by manager_id);
